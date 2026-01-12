@@ -1,9 +1,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/> 
     <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- Foreground service 기본 + (Android 14 타겟 시) mediaPlayback 타입 권한 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
+
+    <!-- 로컬 음원 접근 -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
+    <!-- (구버전용) -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:label="Samsung Music Clone"
@@ -32,16 +40,16 @@
             </intent-filter>
         </activity>
 
-       <service
+        <service
     android:name="com.ryanheise.audioservice.AudioService"
-    android:foregroundServiceType="mediaPlayback"
-    android:exported="true">
+    android:exported="true"
+    android:foregroundServiceType="mediaPlayback">
     <intent-filter>
         <action android:name="android.media.browse.MediaBrowserService" />
     </intent-filter>
 </service>
 
-       <receiver
+<receiver
     android:name="com.ryanheise.audioservice.MediaButtonReceiver"
     android:exported="true">
     <intent-filter>
